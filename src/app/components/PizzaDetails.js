@@ -16,9 +16,9 @@ const PizzaDetails = ({ pizza, setModal }) => {
   const { addToCart } = useContext(CartContext)
 
   useEffect(() => {
-    size === 'small' ? setPrice(parseFloat(pizza.priceSm + additionalToppingPrice).toFixed(2)) :
-      size === 'medium' ? setPrice(parseFloat(pizza.priceMd + additionalToppingPrice).toFixed(2)) :
-        size === 'large' ? setPrice(parseFloat(pizza.priceLg + additionalToppingPrice).toFixed(2)) : null;
+    size === 'small' ? setPrice(parseFloat(pizza.priceSm + additionalToppingPrice)) :
+      size === 'medium' ? setPrice(parseFloat(pizza.priceMd + additionalToppingPrice)) :
+        size === 'large' ? setPrice(parseFloat(pizza.priceLg + additionalToppingPrice)) : null;
   })
 
   useEffect(() => {
@@ -43,13 +43,14 @@ const PizzaDetails = ({ pizza, setModal }) => {
             <div className="font-semibold">
               <h2 className="capitalize text-3xl mb-1">{pizza.name}</h2>
               <div className=" mb-6 text-lg font-medium">
-                <span>{size === 'small' ? '25 cm' : size === 'medium' ? '30 cm' : size === 'large' ? '35 cm' : null}</span>
-                <span>, {crust} crust</span>
+                {/* <span>{size === 'small' ? '25 cm' : size === 'medium' ? '30 cm' : size === 'large' ? '35 cm' : null}</span> */}
+                <span className="text-2xl">{pizza.size}</span>
+                {/* <span>, Versión {crust}</span> */}
               </div>
             </div>
-            <SizeSelection pizza={pizza} size={size} setSize={setSize} />
+            {/* <SizeSelection pizza={pizza} size={size} setSize={setSize} /> */}
             <CrustSelection crust={crust} setCrust={setCrust} />
-            <div className="mb-4 text-xl font-semibold">Choose topping</div>
+            <div className="mb-4 text-xl font-semibold">¿Toppings?</div>
             <div className="flex flex-1 flex-wrap gap-2 py-1 justify-center lg:justify-start">
               {pizza.toppings?.map((topping, index) => {
                 return <Topping topping={topping} additionalTopping={additionalTopping} setAdditionalTopping={setAdditionalTopping} key={index} />
@@ -59,7 +60,7 @@ const PizzaDetails = ({ pizza, setModal }) => {
         </div>
         <div className="h-full flex items-center px-2 lg:items-end">
           <button onClick={() => { addToCart(pizza.id, pizza.image, pizza.name, price, additionalTopping, size, crust), setModal(false) }} className="btn btn-lg gradient w-full flex justify-center gap-x-2">
-            <div>Add to cart for</div>
+            <div>Agregar Por:</div>
             <div>$ {price}</div>
           </button>
         </div>

@@ -17,8 +17,8 @@ const CartItem = ({ pizza }) => {
           <div className="text-lg capitalize font-bold">{pizza.name}</div>
 
           <div className="flex flex-col gap-y-1">
-            <div className="capitalize font-medium text-[15px]">{pizza.crust} crust</div>
-            <div className="capitalize mb-2 font-medium text-[15px]">{pizza.size} size</div>
+            <div className="capitalize font-medium text-[15px]">Versión {pizza.crust}</div>
+            <div className="capitalize mb-2 font-medium text-[15px]">Tamaño {pizza.size}</div>
             <div className="flex items-center gap-x-1">
               <div onClick={() => decreaseAmount(pizza.id, pizza.price)} className="w-[18px] h-[18px] flex justify-center items-center cursor-pointer text-white gradient rounded-full">
                 <BiMinus />
@@ -44,7 +44,7 @@ const CartItem = ({ pizza }) => {
       </div>
       <div className="flex flex-wrap items-center gap-3 p-6 border-b border-black/10">
         <div className="font-semibold">
-          Toppings: {pizza.additionalTopping.length === 0 && 'None'}
+          Toppings: {pizza.additionalTopping.length === 0 && 'Ninguno'}
         </div>
         {pizza.additionalTopping.map((topping, index) => {
           return <div className="capitalize text-sm gradient font-medium px-3 py-1 rounded-full leading-none" key={index}>{topping.name}</div>

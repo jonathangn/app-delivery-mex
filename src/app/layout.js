@@ -6,9 +6,12 @@ import Nav from './components/Nav'
 import { Bangers, Quicksand, Roboto_Condensed } from 'next/font/google'
 import CartMobileIcon from './components/CartMobileIcon';
 import CartMobile from './components/CartMobile';
-import CartProvider from './context/CartContext';
+import CartProvider, { CartContext } from './context/CartContext';
 import CartDesktop from './components/CartDesktop';
 import Footer from './components/Footer';
+import OrderState from './components/OrderState';
+import { useContext } from 'react';
+
 
 const bangers = Bangers({
   subsets: ['latin'],
@@ -32,14 +35,7 @@ export default function RootLayout({ children }) {
     <CartProvider>
       <html lang='en'>
         <body className={`${quicksand.variable} ${bangers.variable} ${robotoCondensed.variable} font-quicksand`}>
-
-          <Nav />
-          <CartMobileIcon />
-          <CartMobile />
           {children}
-
-          <CartDesktop />
-          <Footer />
         </body>
       </html>
     </CartProvider>

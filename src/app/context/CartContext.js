@@ -1,17 +1,32 @@
 // cart context
 'use client'
 
+// import { Cloudinary } from "@cloudinary/url-gen";
 import { createContext, useEffect, useState } from "react";
+import OrderState from "../components/OrderState";
+import { redirect, router } from 'next/navigation'
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
+    const MAIN_API = process.env.NEXT_PUBLIC_MAIN_API
+    // const MAIN_URL = process.env.NEXT_PUBLIC_MAIN_URL
+    // const cld = new Cloudinary({ cloud: { cloudName: 'app-delivery-mex-img' } });
 
     const [isOpen, setIsOpen] = useState(false)
     const [cart, setCart] = useState([])
 
     const [cartTotal, setCartTotal] = useState(0)
     const [itemAmount, setItemAmount] = useState(0)
+
+    const [successMsg, setSuccessMsg] = useState(false)
+    // const [order, setOrder] = useState([])
+
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [orders, setOrders] = useState([])
+
+    const [userOrders, setUserOrders] = useState([])
+    const [banner, setBanner] = useState(false)
 
     useEffect(() => {
         const amount = cart.reduce((a, c) => {
@@ -25,6 +40,11 @@ const CartProvider = ({ children }) => {
             return a + Number(c.price) * c.amount
         }, 0)
         setCartTotal(price)
+    })
+
+    useEffect(() => {
+        // order.forEach(o => fetch(`http://localhost:3000/api/orders/${o._id}`))
+        // order && order.forEach(o => console.log("VEAMOS IDS: ", o._id))
     })
 
     const addToCart = (id, image, name, price, additionalTopping, size, crust) => {
@@ -85,7 +105,93 @@ const CartProvider = ({ children }) => {
         }
     }
 
-    return <CartContext.Provider value={{ isOpen, setIsOpen, addToCart, cart, setCart, removeItem, increaseAmount, decreaseAmount, itemAmount, cartTotal }}>
+    const handleCreateOrder = async (data) => {
+        const total = parseFloat(cartTotal).toFixed(2);
+
+        try {
+            const body = { ...data, total: total, cart: cart };
+
+            // STANDAR POST
+            const res = await fetch(`${MAIN_API}/orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            })
+            if (res.status === 200) {
+                setCart([])
+                setSuccessMsg(true)
+                const newOrder = await res.json()
+                userOrders.push(newOrder)
+                setBanner(true)
+            }
+        } catch (e) {
+            console.log(e.message)
+        }
+    };
+
+    const handleUpdateOrder = async (data) => {
+        try {
+            const body = { ...data }
+            // STANDAR POST
+            const res = await fetch(`${MAIN_API}/orders`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+            // if (res.status === 200) {
+            //     setIsAdmin(true)
+            //     console.log(res.body, "THIS IS RES")
+            // }
+            // console.log(res, "Respuesta")
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleLogin = async (data) => {
+        try {
+            const body = { ...data }
+
+            // STANDAR POST
+            const res = await fetch(`${MAIN_API}/auth`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'API-Key': process.env.DATA_API_KEY,
+                },
+                body: JSON.stringify(body),
+            });
+            if (res.status === 200) {
+                // console.log("ESTA ES LA RESPUESTA", res)
+                setIsAdmin(true)
+                // const token = cookies.token
+                // if (!token || token !== process.env.token) {
+                //   return res.status(401).json("Not authenticated!")
+                // }
+                //     res.setHeader(
+                //         "Set-Cookie",
+                //         cookie.serialize("token", process.env.TOKEN, {
+                //             maxAge: 60 * 60,
+                //             sameSite: "strict",
+                //             path: "/",
+                //         })
+                //     );
+                //     res.status(200).json("Succesfull Login");
+                // } else {
+                //     console.log("ENTRÓ AL ELSE")
+                //     res.status(400).json("Wrong Credentials!");
+                // }
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    };
+
+    return <CartContext.Provider value={{ isOpen, setIsOpen, addToCart, cart, setCart, removeItem, increaseAmount, decreaseAmount, itemAmount, cartTotal, handleCreateOrder, orders, userOrders, banner, setBanner, isAdmin, successMsg, setSuccessMsg, handleLogin, handleUpdateOrder }}>
         {children}
     </CartContext.Provider>
 }

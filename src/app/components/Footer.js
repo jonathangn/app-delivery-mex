@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { FaYoutube, FaFacebook, FaInstagram, FaPinterest } from "react-icons/fa";
+import { FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
 
 const Footer = () => {
   return <footer className="bg-primary bg-pattern py-16">
@@ -11,21 +11,15 @@ const Footer = () => {
           <Image src={'logo.svg'} width={180} height={180} alt="" />
         </Link>
         <div className="flex gap-x-6 text-xl text-white ">
-          <Link href={'#'}>
-            <FaYoutube />
+          <Link target="_blank" href={'https://www.tiktok.com/@lachulada.co'}>
+            <FaTiktok />
           </Link>
-          <Link href={'#'}>
-            <FaFacebook />
-          </Link>
-          <Link href={'#'}>
+          <Link target="_blank" href={'https://www.instagram.com/lachulada.co/'}>
             <FaInstagram />
-          </Link>
-          <Link href={'#'}>
-            <FaPinterest />
           </Link>
         </div>
         <div className="text-white font-medium">
-          Copyright &copy; 2023
+          Derechos Reservados &copy; 2023
         </div>
       </div>
     </div>

@@ -29,11 +29,11 @@ const CartBottom = () => {
         <div>$ {parseFloat(cartTotal).toFixed(2)}</div>
       </div>
       <div className="flex flex-col gap-y-3">
-        <button onClick={() => { setIsOpen(false), toggleModal() }} className="btn btn-lg gradient font-semibold flex justify-center">Checkout</button>
+        <button onClick={() => { setIsOpen(false), toggleModal() }} className="btn btn-lg gradient font-semibold flex justify-center">Confirmar</button>
       </div>
     </div>) : (<div className="absolute top-0 w-full h-full flex justify-center items-center -z-10">
       <div className="font-semibold">
-        Your cart is empty
+        Tu carrito está vacío
       </div>
     </div>)}
     {

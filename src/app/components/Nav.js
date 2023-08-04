@@ -11,15 +11,15 @@ const Nav = () => {
   return (
     <nav className="absolute w-full py-8">
       <div className="container mx-auto flex flex-col lg:flex-row gap-y-3 justify-between items-center">
-        <Link href="#" className="max-w-[160px] lg:max-w-max">
-          <Image src={'logo.svg'} width={180} height={180} alt="" />
+        <Link href="#" className="max-w-[200px] lg:max-w-max">
+          <Image src={'logo.svg'} width={200} height={150} alt="" />
         </Link>
-        <div className="flex gap-x-8 items-center">
+        <div className="hidden lg:flex gap-x-8 items-center">
           <div className="flex gap-x-3 items-center">
             <Image src={'phone.svg'} width={42} height={42} alt="" />
             <div className="text-white">
-              <div className="font-robotoCondensed uppercase font-medium leading-none text-sm">24/7 Pizza delivery service</div>
-              <div className="text-3xl font-robotoCondensed font-extrabold leading-none tracking-wide">301 7893573</div>
+              <div className="font-robotoCondensed uppercase font-medium leading-none text-sm">Atención de 11 AM a 11PM</div>
+              <div className="text-3xl font-robotoCondensed font-extrabold leading-none tracking-wide">318 6118823</div>
             </div>
           </div>
           <div onClick={() => setIsOpen(!isOpen)} className="relative cursor-pointer hidden lg:flex">

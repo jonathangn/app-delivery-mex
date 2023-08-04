@@ -1,392 +1,108 @@
-// import components
 import Pizza from './components/Pizza';
 import Banner from './components/Banner';
+import Nav from './components/Nav';
+import CartMobile from './components/CartMobile';
+import CartMobileIcon from './components/CartMobileIcon';
+import WhatsAppIcon from './components/WhatsAppIcon';
+import CartDesktop from './components/CartDesktop';
+import OrderState from './components/OrderState';
+import Footer from './components/Footer';
+import { cookies, headers } from 'next/headers'
 
-// pizza data
-const pizzas = [
-  {
-    id: 1,
-    name: 'capricciosa',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/capricciosa.webp',
-    priceSm: 9.99,
-    priceMd: 10.99,
-    priceLg: 11.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'cheesy',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/cheesy.webp',
-    priceSm: 10.99,
-    priceMd: 11.99,
-    priceLg: 12.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: 'hawaii',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/hawaii.webp',
-    priceSm: 10.99,
-    priceMd: 11.99,
-    priceLg: 12.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: 'italian',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/italian.webp',
-    priceSm: 11.99,
-    priceMd: 12.99,
-    priceLg: 13.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: 'margherita',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/margherita.webp',
-    priceSm: 9.99,
-    priceMd: 10.99,
-    priceLg: 11.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 6,
-    name: 'pepperoni',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/pepperoni.webp',
-    priceSm: 10.99,
-    priceMd: 11.99,
-    priceLg: 12.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 7,
-    name: 'quattro formaggi',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/quattro-formaggi.webp',
-    priceSm: 12.99,
-    priceMd: 13.99,
-    priceLg: 14.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 8,
-    name: 'quattro stagioni',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/quattro-stagioni.webp',
-    priceSm: 11.99,
-    priceMd: 12.99,
-    priceLg: 13.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 9,
-    name: 'tonno',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/tonno.webp',
-    priceSm: 10.99,
-    priceMd: 11.99,
-    priceLg: 12.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-  {
-    id: 10,
-    name: 'vegetarian',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia recusandae dolorum enim eveniet. Mollitia laudantium, sunt blanditiis ratione quam delectus.',
-    image: '/vegetarian.webp',
-    priceSm: 9.99,
-    priceMd: 10.99,
-    priceLg: 11.99,
-    toppings: [
-      {
-        image: '/cherry.png',
-        name: 'cherry tomatoes',
-        price: 2,
-      },
-      {
-        image: '/corn.png',
-        name: 'corn',
-        price: 2,
-      },
-      {
-        image: '/fresh-tomatoes.png',
-        name: 'fresh tomatoes',
-        price: 2,
-      },
-      {
-        image: '/jalapeno.png',
-        name: 'jalapeno',
-        price: 2,
-      },
-      {
-        image: '/parmesan.png',
-        name: 'parmesan',
-        price: 2,
-      },
-    ],
-  },
-];
+import dbConnect from './utils/mongo';
+import Product from './models/Product';
+import axios from 'axios';
 
-export default function Home() {
-  return (<section>
-    <Banner />
-    <div className='container mx-auto'><div>
-      {
-        <div className='grid grid-cols-2 gap-[15px] md:grid-cols-3 xl:grid-cols-4 xl:gap-[30px] py-12'>
-          {pizzas.map((pizza) => {
-            return <Pizza pizza={pizza} key={pizza.id} />
-          })}
+async function getProducts() {
+
+  const MAIN_API = process.env.MAIN_API
+
+  // const authHeader = headers().get('authorization')
+
+  const res = await import("../app/api/products/route.js")
+  // const res = await fetch(`${MAIN_API}/products`, { cache: 'no-store' })
+
+  // StaticData const res = await fetch(`http://localhost:3000/api/products`, { cache: 'force-cache' })
+  // DynamicData const res = await fetch(`http://localhost:3000/api/products`, { cache: 'no-store' })
+  //   const myCookie = ctx.req?.cookies || "";
+  //   let admin = false;
+  //   if (myCookie.token === process.env.TOKEN) {
+  //     admin = true;
+  //   }
+  //  const pizzas = await fetch("http://localhost:3000/api/products");
+  //  const orders = admin && await axios.get("http://localhost:3000/api/orders");
+
+  const something = await res.GET()
+  const products = await something.json()
+
+  return products
+}
+
+export default async function Home() {
+  // const theme = cookies().get('theme')
+  const pizzas = await getProducts()
+  const rice = pizzas.filter((i) => i?.category === 'rice')
+  const taco = pizzas.filter((i) => i?.category === 'taco')
+  const burr = pizzas.filter((i) => i?.category === 'burr')
+  const txmx = pizzas.filter((i) => i?.category === 'txmx')
+
+  return (
+    <>
+      <Nav />
+      <CartMobileIcon />
+      <WhatsAppIcon />
+      <CartMobile />
+      <section>
+        <Banner />
+        <div className='container mx-auto'>
+          <div>
+            {
+              <div className='grid grid-cols-2 gap-[15px] md:grid-cols-3 xl:grid-cols-4 xl:gap-[30px] py-12'>
+                {rice?.map((rice) => {
+                  return <Pizza pizza={rice} key={rice._id} />
+                })}
+              </div>
+            }
+          </div>
         </div>
-      }
-    </div></div>
-  </section>);
+        <div className='container mx-auto'>
+          <div>
+            {
+              <div className='grid grid-cols-2 gap-[15px] md:grid-cols-3 xl:grid-cols-4 xl:gap-[30px] py-12'>
+                {taco?.map((taco) => {
+                  return <Pizza pizza={taco} key={taco._id} />
+                })}
+              </div>
+            }
+          </div>
+        </div>
+        <div className='container mx-auto'>
+          <div>
+            {
+              <div className='grid grid-cols-2 gap-[15px] md:grid-cols-3 xl:grid-cols-4 xl:gap-[30px] py-12'>
+                {burr?.map((burr) => {
+                  return <Pizza pizza={burr} key={burr._id} />
+                })}
+              </div>
+            }
+          </div>
+        </div>
+        <div className='container mx-auto'>
+          <div>
+            {
+              <div className='grid grid-cols-2 gap-[15px] md:grid-cols-3 xl:grid-cols-4 xl:gap-[30px] py-12'>
+                {txmx?.map((txmx) => {
+                  return <Pizza pizza={txmx} key={txmx._id} />
+                })}
+              </div>
+            }
+          </div>
+        </div>
+      </section>
+
+      <CartDesktop />
+      <OrderState />
+      <Footer />
+    </>
+  );
 }

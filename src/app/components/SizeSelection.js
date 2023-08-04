@@ -9,24 +9,24 @@ const SizeSelection = ({ pizza, size, setSize }) => {
           <input type="radio" name="size" value='small' checked={size === 'small'}
             onChange={(e) => setSize(e.target.value)}
             className="appearance-none" />
-          Small
+          Standar
         </label>
 
-        <label className=" flex flex-col items-center gap-x-2 cursor-pointer">
+        {/* <label className=" flex flex-col items-center gap-x-2 cursor-pointer">
           <Image className={`${size === 'medium' ? 'border-2 border-orange p-[2px] rounded-full' : 'border-transparent filter saturate-[.1]'}`} src={pizza.image} width={70} height={70} alt="" />
           <input type="radio" name="size" value='medium' checked={size === 'medium'}
             onChange={(e) => setSize(e.target.value)}
             className="appearance-none" />
-          Medium
-        </label>
+          Kilo
+        </label> */}
 
-        <label className=" flex flex-col items-center gap-x-2 cursor-pointer">
+        {/* <label className=" flex flex-col items-center gap-x-2 cursor-pointer">
           <Image className={`${size === 'large' ? 'border-2 border-orange p-[2px] rounded-full' : 'border-transparent filter saturate-[.1]'}`} src={pizza.image} width={80} height={80} alt="" />
           <input type="radio" name="size" value='large' checked={size === 'large'}
             onChange={(e) => setSize(e.target.value)}
             className="appearance-none" />
           Large
-        </label>
+        </label> */}
       </div>
     </div>);
 };
