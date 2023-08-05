@@ -31,7 +31,7 @@ const Order = ({ order, stateTx, time, setStateTx, handleUpdateOrder, status, se
                                             <h3 className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">{item.name}</h3>
                                             <div className="flex justify-start items-start flex-col space-y-2">
                                                 <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-800 font-semibold">Picante: </span> {item.crust}</p>
-                                                <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-800 font-semibold">Tamaño: </span> {item.size}</p>
+                                                {/* <p className="text-sm dark:text-white leading-none text-gray-800"><span className="dark:text-gray-400 text-gray-800 font-semibold">Tamaño: </span> {item.size}</p> */}
                                             </div>
                                         </div>
                                         <div className="flex justify-between space-x-8 items-start w-full">
@@ -86,7 +86,7 @@ const Order = ({ order, stateTx, time, setStateTx, handleUpdateOrder, status, se
                                 {/* <p className="text-lg font-semibold leading-6 dark:text-white text-gray-800">$5.000</p> */}
                             </div>
                             <div className="w-full flex justify-center items-center">
-                                <button onClick={() => handleUpdateOrder(order)} className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">Cambiar Estado</button>
+                                <button onClick={() => handleUpdateOrder({ order })} className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">Cambiar Estado</button>
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@ import { CartContext } from "@/app/context/CartContext";
 export default function OrderDetail({ params }) {
 
     const MAIN_API = process.env.NEXT_PUBLIC_MAIN_API
-    const { handleUpdateOrder } = useContext(CartContext);
+    const { handleUpdateOrder, } = useContext(CartContext);
 
     const [order, setOrder] = useState();
     const [status, setStatus] = useState();
@@ -21,22 +21,22 @@ export default function OrderDetail({ params }) {
             setOrder(order)
             setStatus(order?.status)
             setTime(order?.createdAt)
+            switch (status) {
+                case 0:
+                    setStateTx('Comanda')
+                    break;
+                case 1:
+                    setStateTx('Preparación')
+                    break;
+                case 2:
+                    setStateTx('Despachado')
+                    break;
+                default:
+                    break;
+            }
         };
         fetchData();
-        switch (status) {
-            case 0:
-                setStateTx('Comanda')
-                break;
-            case 1:
-                setStateTx('Preparación')
-                break;
-            case 2:
-                setStateTx('despachado')
-                break;
-            default:
-                break;
-        }
-    });
+    }, [handleUpdateOrder, params.id, status])
 
     return (
         <Order order={order} time={time} stateTx={stateTx} setStateTx={setStateTx} handleUpdateOrder={handleUpdateOrder} status={status} setStatus={setStatus} />

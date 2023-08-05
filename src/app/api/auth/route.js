@@ -17,6 +17,13 @@ import { CartContext } from "@/app/context/CartContext";
 // }
 
 export async function POST(request) {
+    // const authHeader = headers().get('authorization')
+    //   const myCookie = ctx.req?.cookies || "";
+    //   let admin = false;
+    //   if (myCookie.token === process.env.TOKEN) {
+    //     admin = true;
+    //   }
+
     const cookieStore = cookies()
     // const router = useRouter()
     // const { setAdmin } = useContext(CartContext)

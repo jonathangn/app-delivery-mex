@@ -1,14 +1,19 @@
 import connectDB from "../../utils/mongo";
 import Order from "../../models/Order";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+// import { revalidatePath } from 'next/cache'
 
 export async function GET() {
+  // const path = request.nextUrl.searchParams.get('path')
+  // revalidatePath(path)
+
   await connectDB();
   try {
     const orders = await Order.find();
     return NextResponse.json(orders)
+    // return NextResponse.json({ orders, revalidated: true, now: Date.now() })
   } catch (err) {
-    return NextResponse.status(500).json(err)
+    return NextResponse.json(err)
   }
 }
 
@@ -40,12 +45,17 @@ export async function PUT(request) {
     // const filter = { _id: req._id };
     // const update = { status: req.status++ };
     // const updatedOrder = await Order.findOneAndUpdate(filter, update);
-    const { _id, status } = req
-    const doc = await Order.findById(_id)
+    const { data } = await req
+    const { _id, status } = data.order
+    // const doc = await Order.findById(_id).exec();
+    const doc = await Order.findOne({ _id: _id });
     // const newStatus = status + 1;
     // doc.status = newStatus;
-    doc.status = status + 1;
-    await doc.save();
+    if (status < 2) {
+      doc.status = status + 1
+    }
+    const updatedOrder = await doc.save();
+    return NextResponse.json(updatedOrder)
     // return NextResponse.json(updatedOrder)
   } catch (err) {
     console.log(err.message)

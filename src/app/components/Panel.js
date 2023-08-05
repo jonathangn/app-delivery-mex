@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 
 const Panel = ({ orders }) => {
-    const { isAdmin } = useContext(CartContext)
+    // const { isAdmin } = useContext(CartContext)
 
     return (
         <div className="container mx-auto py-4">

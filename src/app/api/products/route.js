@@ -11,6 +11,6 @@ export async function GET(request) {
     const products = await Product.find();
     return NextResponse.json(products)
   } catch (err) {
-    return NextResponse.status(500).json(err)
+    return NextResponse.json(err)
   }
 }

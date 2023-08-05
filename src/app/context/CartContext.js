@@ -5,27 +5,25 @@
 import { createContext, useEffect, useState } from "react";
 import OrderState from "../components/OrderState";
 import { redirect, router } from 'next/navigation'
+import connectDB from "../utils/mongo";
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
     const MAIN_API = process.env.NEXT_PUBLIC_MAIN_API
-    // const MAIN_URL = process.env.NEXT_PUBLIC_MAIN_URL
     // const cld = new Cloudinary({ cloud: { cloudName: 'app-delivery-mex-img' } });
 
-    const [isOpen, setIsOpen] = useState(false)
     const [cart, setCart] = useState([])
-
+    const [isOpen, setIsOpen] = useState(false)
     const [cartTotal, setCartTotal] = useState(0)
     const [itemAmount, setItemAmount] = useState(0)
-
     const [successMsg, setSuccessMsg] = useState(false)
-    // const [order, setOrder] = useState([])
 
     const [isAdmin, setIsAdmin] = useState(false)
     const [orders, setOrders] = useState([])
 
     const [userOrders, setUserOrders] = useState([])
+    const [lastOrder, setLastOrder] = useState({})
     const [banner, setBanner] = useState(false)
 
     useEffect(() => {
@@ -43,9 +41,12 @@ const CartProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        // order.forEach(o => fetch(`http://localhost:3000/api/orders/${o._id}`))
-        // order && order.forEach(o => console.log("VEAMOS IDS: ", o._id))
-    })
+        if (Object.keys(lastOrder).length !== 0) {
+            fetch(`${MAIN_API}/api/orders/${lastOrder._id}`).then(res => {
+                setLastOrder(res.json())
+            }).catch(err => console.log(err))
+        }
+    }, [])
 
     const addToCart = (id, image, name, price, additionalTopping, size, crust) => {
         additionalTopping.sort((a, b) => a.name.localeCompare(b.name));
@@ -112,7 +113,7 @@ const CartProvider = ({ children }) => {
             const body = { ...data, total: total, cart: cart };
 
             // STANDAR POST
-            const res = await fetch(`${MAIN_API}/orders`, {
+            const res = await fetch("/api/orders", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -124,6 +125,7 @@ const CartProvider = ({ children }) => {
                 setSuccessMsg(true)
                 const newOrder = await res.json()
                 userOrders.push(newOrder)
+                setLastOrder(newOrder)
                 setBanner(true)
             }
         } catch (e) {
@@ -132,23 +134,19 @@ const CartProvider = ({ children }) => {
     };
 
     const handleUpdateOrder = async (data) => {
-        try {
-            const body = { ...data }
-            // STANDAR POST
-            const res = await fetch(`${MAIN_API}/orders`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(body),
-            });
-            // if (res.status === 200) {
-            //     setIsAdmin(true)
-            //     console.log(res.body, "THIS IS RES")
-            // }
-            // console.log(res, "Respuesta")
-        } catch (err) {
-            console.log(err)
+        // try {
+        const body = { data }
+        // await connectDB();
+        // STANDAR PUT
+        const res = await fetch("/api/orders", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+        if (res.status === 200) {
+            // console.log(res.body)
         }
     }
 
@@ -191,7 +189,7 @@ const CartProvider = ({ children }) => {
         }
     };
 
-    return <CartContext.Provider value={{ isOpen, setIsOpen, addToCart, cart, setCart, removeItem, increaseAmount, decreaseAmount, itemAmount, cartTotal, handleCreateOrder, orders, userOrders, banner, setBanner, isAdmin, successMsg, setSuccessMsg, handleLogin, handleUpdateOrder }}>
+    return <CartContext.Provider value={{ isOpen, setIsOpen, addToCart, cart, setCart, removeItem, increaseAmount, decreaseAmount, itemAmount, cartTotal, handleCreateOrder, orders, userOrders, banner, setBanner, isAdmin, successMsg, setSuccessMsg, handleLogin, handleUpdateOrder, lastOrder }}>
         {children}
     </CartContext.Provider>
 }

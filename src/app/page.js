@@ -12,29 +12,19 @@ import { cookies, headers } from 'next/headers'
 import dbConnect from './utils/mongo';
 import Product from './models/Product';
 import axios from 'axios';
+import { useContext } from 'react';
+import { CartContext } from './context/CartContext';
 
 async function getProducts() {
-
-  const MAIN_API = process.env.MAIN_API
-
-  // const authHeader = headers().get('authorization')
-
-  const res = await import("../app/api/products/route.js")
+  // const MAIN_API = process.env.MAIN_API
   // const res = await fetch(`${MAIN_API}/products`, { cache: 'no-store' })
-
   // StaticData const res = await fetch(`http://localhost:3000/api/products`, { cache: 'force-cache' })
   // DynamicData const res = await fetch(`http://localhost:3000/api/products`, { cache: 'no-store' })
-  //   const myCookie = ctx.req?.cookies || "";
-  //   let admin = false;
-  //   if (myCookie.token === process.env.TOKEN) {
-  //     admin = true;
-  //   }
   //  const pizzas = await fetch("http://localhost:3000/api/products");
   //  const orders = admin && await axios.get("http://localhost:3000/api/orders");
-
-  const something = await res.GET()
-  const products = await something.json()
-
+  const fetchProd = await import("../app/api/products/route.js")
+  const resProd = await fetchProd.GET()
+  const products = await resProd.json()
   return products
 }
 
@@ -45,7 +35,6 @@ export default async function Home() {
   const taco = pizzas.filter((i) => i?.category === 'taco')
   const burr = pizzas.filter((i) => i?.category === 'burr')
   const txmx = pizzas.filter((i) => i?.category === 'txmx')
-
   return (
     <>
       <Nav />
@@ -99,7 +88,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
       <CartDesktop />
       <OrderState />
       <Footer />
