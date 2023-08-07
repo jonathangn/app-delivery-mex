@@ -24,15 +24,16 @@ const OrderState = () => {
   // }
   const { lastOrder, banner, setBanner, handleUpdateOrder } = useContext(CartContext)
   const [stateTx, setStateTx] = useState('');
-  const [status, setStatus] = useState();
+  // const [status, setStatus] = useState();
+  // let status = 0
 
   useEffect(() => {
+    let control = 0
     const fetchData = async () => {
       const res = await fetch(`${MAIN_API}/orders`)
       const json = await res.json();
-      const order = json.find(order => (order._id === lastOrder._id))
-      setStatus(order?.status)
-      switch (order?.status) {
+      const order = await json.find(order => (order._id === lastOrder._id))
+      switch (order.status) {
         case 0:
           setStateTx('Comanda')
           break;
@@ -45,15 +46,17 @@ const OrderState = () => {
         default:
           break;
       }
+      control = order.status
     };
-    fetchData()
-
-    if (status <= 2 && banner) {
-      setInterval(() => {
-        fetchData()
-      }, 60000);
+    if (banner) {
+      fetchData()
+      if (control <= 1) {
+        setInterval(() => {
+          fetchData()
+        }, 60000);
+      }
     }
-  }, [lastOrder, status])
+  }, [banner])
 
   return (
     <>

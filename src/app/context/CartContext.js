@@ -4,27 +4,35 @@
 // import { Cloudinary } from "@cloudinary/url-gen";
 import { createContext, useEffect, useState } from "react";
 import OrderState from "../components/OrderState";
-import { redirect, router } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import connectDB from "../utils/mongo";
+
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
+
+    const router = useRouter();
     const MAIN_API = process.env.NEXT_PUBLIC_MAIN_API
     // const cld = new Cloudinary({ cloud: { cloudName: 'app-delivery-mex-img' } });
 
+    //CART
     const [cart, setCart] = useState([])
     const [isOpen, setIsOpen] = useState(false)
     const [cartTotal, setCartTotal] = useState(0)
     const [itemAmount, setItemAmount] = useState(0)
-    const [successMsg, setSuccessMsg] = useState(false)
 
+    //ADMIN
     const [isAdmin, setIsAdmin] = useState(false)
-    const [orders, setOrders] = useState([])
+    // const [orders, setOrders] = useState([])
 
+    //USER
+    const [successMsg, setSuccessMsg] = useState(false)
     const [userOrders, setUserOrders] = useState([])
     const [lastOrder, setLastOrder] = useState({})
     const [banner, setBanner] = useState(false)
+
+    let dailyOps = []
 
     useEffect(() => {
         const amount = cart.reduce((a, c) => {
@@ -134,19 +142,23 @@ const CartProvider = ({ children }) => {
     };
 
     const handleUpdateOrder = async (data) => {
-        // try {
-        const body = { data }
-        // await connectDB();
-        // STANDAR PUT
-        const res = await fetch("/api/orders", {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-        });
-        if (res.status === 200) {
-            // console.log(res.body)
+        try {
+            const body = { data }
+            // STANDAR PUT
+            const res = await fetch("/api/orders", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+            if (res.status === 200) {
+                const { _id, status } = await res.json()
+                dailyOps.push({ _id, status })
+                return status
+            }
+        } catch (err) {
+            console.log(err)
         }
     }
 
@@ -189,7 +201,7 @@ const CartProvider = ({ children }) => {
         }
     };
 
-    return <CartContext.Provider value={{ isOpen, setIsOpen, addToCart, cart, setCart, removeItem, increaseAmount, decreaseAmount, itemAmount, cartTotal, handleCreateOrder, orders, userOrders, banner, setBanner, isAdmin, successMsg, setSuccessMsg, handleLogin, handleUpdateOrder, lastOrder }}>
+    return <CartContext.Provider value={{ isOpen, setIsOpen, addToCart, cart, setCart, removeItem, increaseAmount, decreaseAmount, itemAmount, cartTotal, handleCreateOrder, userOrders, banner, setBanner, isAdmin, successMsg, setSuccessMsg, handleLogin, handleUpdateOrder, lastOrder, dailyOps }}>
         {children}
     </CartContext.Provider>
 }

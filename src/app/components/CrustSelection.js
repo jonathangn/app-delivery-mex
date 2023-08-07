@@ -3,12 +3,12 @@ const CrustSelection = ({ crust, setCrust }) => {
     <div className="flex justify-center items-center lg:justify-start">
       <div className="flex gap-x-12 mb-8 font-medium">
         <label className="flex items-center gap-x-2 cursor-pointer">
-          <input className="appearance-none w-4 h-4 border border-gray-400 rounded-full checked:bg-gradient-to-b checked:from-primary checked:to-secondary checked:border-secondary cursor-pointer" type="radio" name="crust" value="traditional" checked={crust === 'traditional'} onChange={(e) => setCrust(e.target.value)} />
+          <input className="appearance-none w-4 h-4 border border-gray-400 rounded-full checked:bg-gradient-to-b checked:from-primary checked:to-secondary checked:border-secondary cursor-pointer" type="radio" name="crust" value="Tradicional" checked={crust === 'Tradicional'} onChange={(e) => setCrust(e.target.value)} />
           Tradicional
         </label>
 
         <label className="flex items-center gap-x-2 cursor-pointer">
-          <input className="appearance-none w-4 h-4 border border-gray-400 rounded-full checked:bg-gradient-to-b checked:from-primary checked:to-secondary checked:border-secondary cursor-pointer" type="radio" name="crust" value="thin" checked={crust === 'thin'} onChange={(e) => setCrust(e.target.value)} />
+          <input className="appearance-none w-4 h-4 border border-gray-400 rounded-full checked:bg-gradient-to-b checked:from-primary checked:to-secondary checked:border-secondary cursor-pointer" type="radio" name="crust" value="Enchilado" checked={crust === 'Enchilado'} onChange={(e) => setCrust(e.target.value)} />
           Enchilado 🔥
         </label>
       </div>

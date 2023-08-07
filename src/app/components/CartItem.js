@@ -18,7 +18,7 @@ const CartItem = ({ pizza }) => {
 
           <div className="flex flex-col gap-y-1">
             <div className="capitalize font-medium text-[15px]">Versión {pizza.crust}</div>
-            <div className="capitalize mb-2 font-medium text-[15px]">Tamaño {pizza.size}</div>
+            {/* <div className="capitalize mb-2 font-medium text-[15px]">Tamaño {pizza.size}</div> */}
             <div className="flex items-center gap-x-1">
               <div onClick={() => decreaseAmount(pizza.id, pizza.price)} className="w-[18px] h-[18px] flex justify-center items-center cursor-pointer text-white gradient rounded-full">
                 <BiMinus />

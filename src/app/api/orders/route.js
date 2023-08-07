@@ -1,6 +1,7 @@
 import connectDB from "../../utils/mongo";
 import Order from "../../models/Order";
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag, revalidatePath } from "next/cache";
 // import { revalidatePath } from 'next/cache'
 
 export async function GET() {
@@ -39,6 +40,17 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
+  // const secret = request.nextUrl.searchParams.get('secret')
+  // const tag = request.nextUrl.searchParams.get('tag')
+  // if (secret !== process.env.MY_SECRET_TOKEN) {
+  //   return NextResponse.json({ message: 'Invalid secret' }, { status: 401 })
+  // }
+
+  // if (!tag) {
+  //   return NextResponse.json({ message: 'Missing tag param' }, { status: 400 })
+  // }
+  // revalidateTag(tag)
+
   await connectDB();
   try {
     const req = await request.json()
@@ -51,11 +63,12 @@ export async function PUT(request) {
     const doc = await Order.findOne({ _id: _id });
     // const newStatus = status + 1;
     // doc.status = newStatus;
-    if (status < 2) {
+    if (doc?.status < 2) {
       doc.status = status + 1
     }
     const updatedOrder = await doc.save();
-    return NextResponse.json(updatedOrder)
+    // return NextResponse.json(updatedOrder)
+    return NextResponse.json(updatedOrder, { revalidated: true, now: Date.now() })
     // return NextResponse.json(updatedOrder)
   } catch (err) {
     console.log(err.message)

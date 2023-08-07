@@ -10,19 +10,19 @@ const OrderSchema = new mongoose.Schema(
     },
     customerName: {
       type: String,
-      maxlength: 50,
+      // maxlength: 50,
     },
     customerLast: {
       type: String,
-      maxlength: 50,
+      // maxlength: 50,
     },
     email: {
       type: String,
-      maxlength: 50,
+      // maxlength: 50,
     },
     mobile: {
       type: String,
-      maxlength: 10,
+      // maxlength: 10,
     },
     address: {
       type: String,

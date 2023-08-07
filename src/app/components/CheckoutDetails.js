@@ -44,7 +44,7 @@ const CheckoutDetails = ({ setModal }) => {
           <h2 className="text-2xl font-semibold text-center ">Gracias! Tu pedido ha sido registrado</h2>
           <Image src={'/success-1.gif'} width={150} height={150} alt="" />
           <div className="">
-            Este panel se cerrará en <span>{count}</span> segundos
+            Se cerrará en <span>{count}</span> segundos
           </div>
         </div>
         : <form onSubmit={handleSubmit(onSubmit)}>
@@ -56,7 +56,7 @@ const CheckoutDetails = ({ setModal }) => {
                 <div className="flex flex-col gap-4 h-full">
                   <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-0 lg:gap-x-4 ">
                     <input {...register("customerName", { required: true })} type="text" className="w-full input" placeholder="Nombre" />
-                    <input {...register("customerLastname", { required: true })} type="text" className="w-full input" placeholder="Apellido" />
+                    <input {...register("customerLast", { required: true })} type="text" className="w-full input" placeholder="Apellido" />
                   </div>
 
                   <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-0 lg:gap-x-4 ">

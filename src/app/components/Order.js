@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import Image from "next/image";
 import { CartContext } from "../context/CartContext";
+import { FaClipboardList } from "react-icons/fa";
 import moment from 'moment';
 import 'moment/locale/es'
 moment.locale('es')
@@ -9,11 +10,21 @@ moment.locale('es')
 const Order = ({ order, stateTx, time, setStateTx, handleUpdateOrder, status, setStatus }) => {
     const orderDate = moment(time).calendar() ?? null
 
+    async function handleClick(e) {
+        e.preventDefault();
+        const newStatus = await handleUpdateOrder({ order })
+        setStatus(newStatus)
+    }
+
     return (
         <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
-            <div className="flex justify-start item-start space-y-2 flex-col">
-                <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Detalles Orden</h1>
-                <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">{orderDate}</p>
+            <div className="flex flex-row items-center justify-between mx-auto p-4">
+                <div className="w-auto flex justify-start item-start space-y-2 flex-col">
+                    <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Detalles Orden</h1>
+                    <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">{orderDate}</p>
+                </div>
+
+                <a href={`/admin`} className="gradient text-white gradient flex font-medium rounded-lg px-4 my-1 py-4 text-center mr-3 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" > <FaClipboardList className="fa-xl" /></a>
             </div>
             <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
                 <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
@@ -86,7 +97,7 @@ const Order = ({ order, stateTx, time, setStateTx, handleUpdateOrder, status, se
                                 {/* <p className="text-lg font-semibold leading-6 dark:text-white text-gray-800">$5.000</p> */}
                             </div>
                             <div className="w-full flex justify-center items-center">
-                                <button onClick={() => handleUpdateOrder({ order })} className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white">Cambiar Estado</button>
+                                <button onClick={handleClick} className="gradient dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg py-5 w-96 md:w-full text-base font-medium leading-4 text-white dark:text-black">Cambiar Estado</button>
                             </div>
                         </div>
                     </div>
