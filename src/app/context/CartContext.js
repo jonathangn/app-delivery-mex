@@ -145,7 +145,7 @@ const CartProvider = ({ children }) => {
         try {
             const body = { data }
             // STANDAR PUT
-            const res = await fetch("/api/orders", {
+            const res = await fetch(`/api/orders/${data.order._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ const CartProvider = ({ children }) => {
             });
             if (res.status === 200) {
                 const { _id, status } = await res.json()
-                dailyOps.push({ _id, status })
+                // dailyOps.push({ _id, status })
                 return status
             }
         } catch (err) {

@@ -14,9 +14,10 @@ export default function OrderDetail({ params }) {
     const [stateTx, setStateTx] = useState('');
 
     const fetchData = async () => {
-        const res = await fetch(`${MAIN_API}/orders`)
-        const json = await res.json();
-        const order = json.find(order => (order._id === params.id))
+        const res = await fetch(`${MAIN_API}/orders/${params.id}`)
+        const order = await res.json();
+        // const json = await res.json();
+        // const order = json.find(order => (order._id === params.id))
         setOrder(order)
         setStatus(order?.status)
         setTime(order?.createdAt)

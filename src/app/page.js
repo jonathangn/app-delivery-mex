@@ -22,7 +22,7 @@ async function getProducts() {
   // DynamicData const res = await fetch(`http://localhost:3000/api/products`, { cache: 'no-store' })
   //  const pizzas = await fetch("http://localhost:3000/api/products");
   //  const orders = admin && await axios.get("http://localhost:3000/api/orders");
-  const fetchProd = await import("../app/api/products/route.js")
+  const fetchProd = await import("../app/api/products/route.js", { cache: 'no-store' })
   const resProd = await fetchProd.GET()
   const products = await resProd.json()
   return products

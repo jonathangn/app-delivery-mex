@@ -30,9 +30,10 @@ const OrderState = () => {
   useEffect(() => {
     let control = 0
     const fetchData = async () => {
-      const res = await fetch(`${MAIN_API}/orders`)
-      const json = await res.json();
-      const order = await json.find(order => (order._id === lastOrder._id))
+      const res = await fetch(`${MAIN_API}/orders/${lastOrder._id}`)
+      const order = await res.json();
+      // const json = await res.json();
+      // const order = await json.find(order => (order._id === lastOrder._id))
       switch (order.status) {
         case 0:
           setStateTx('Comanda')
