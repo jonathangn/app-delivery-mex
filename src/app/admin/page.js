@@ -1,5 +1,5 @@
 // 'use client'
-
+import { getServerSession } from "next-auth";
 import FooterAuth from "../components/FooterAuth";
 import NavAuth from "../components/NavAuth";
 import Panel from "../components/Panel";
@@ -13,11 +13,15 @@ async function getOrders() {
     // const fetchOrds = await import("../../app/api/orders/route.js", { next: { revalidate: 15 } })
     // const resOrds = await fetchOrds.GET()
     // const orders = await resOrds.json()
+
     return orders
 }
 
 export const revalidate = 15
 export default async function Admin() {
+
+    const session = await getServerSession()
+
     const orders = await getOrders()
     const comanda = orders && orders?.filter((item) => item.status <= 1)
 

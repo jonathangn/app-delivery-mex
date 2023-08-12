@@ -1,17 +1,31 @@
 'use client'
-import { useContext } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { useForm } from "react-hook-form";
 import { redirect, useRouter } from "next/navigation";
-// import { useRouter } from "next/navigation";
+import { signIn } from 'next-auth/react'
 
-const Login = () => {
+function Login() {
 
     const router = useRouter()
+    const [error, setError] = useState()
     const { handleLogin, isAdmin } = useContext(CartContext)
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm()
-    const onSubmit = (d) => handleLogin(d);
+
+    // const onSubmit = (d) => handleLogin(d);
+
+    const onSubmit = async (d) => {
+        // const formData = new FormData(e.currentTarget)
+        const resSignApi = await signIn('credentials', {
+            mail: d.mail,
+            pass: d.pass,
+            redirect: false
+        })
+
+        if (resSignApi?.error) return setError(resSignApi.error)
+        if (resSignApi?.ok) return router.push('/admin')
+    }
 
     if (isAdmin) {
         redirect("/admin")
@@ -19,6 +33,7 @@ const Login = () => {
     } else {
         return (
             <div className="flex flex-col mt-8 items-center justify-center px-6 py-8 mx-auto">
+                {error ? <div>{error}</div> : <></>}
                 <div className="w-full bg-white rounded-lg shadow dark:border max-w-sm dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">

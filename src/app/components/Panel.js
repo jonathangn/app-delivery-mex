@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
+import { signOut } from 'next-auth/react'
 
 const Panel = ({ orders }) => {
     // const { isAdmin } = useContext(CartContext)
@@ -10,6 +11,8 @@ const Panel = ({ orders }) => {
     return (
         <div className="container mx-auto py-4">
             <div className="relative overflow-x-auto">
+                {/* <h3>COMANDA</h3>
+                <button onClick={() => signOut()}>Salir</button> */}
                 <dl className="max-w-sm mx-auto text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700" >
                     <div className='flex flex-row justify-evenly'>
                         <div className="flex flex-col">

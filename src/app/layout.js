@@ -11,6 +11,7 @@ import CartDesktop from './components/CartDesktop';
 import Footer from './components/Footer';
 import OrderState from './components/OrderState';
 import { useContext } from 'react';
+import AuthProvider from './context/AuthProvider'
 
 
 const bangers = Bangers({
@@ -34,9 +35,11 @@ export default function RootLayout({ children }) {
   return (
     <CartProvider>
       <html lang='en'>
-        <body className={`${quicksand.variable} ${bangers.variable} ${robotoCondensed.variable} font-quicksand`}>
-          {children}
-        </body>
+        <AuthProvider>
+          <body className={`${quicksand.variable} ${bangers.variable} ${robotoCondensed.variable} font-quicksand`}>
+            {children}
+          </body>
+        </AuthProvider>
       </html>
     </CartProvider>
   );

@@ -7,7 +7,7 @@ const FooterAuth = () => {
   return <footer className="bg-primary bg-pattern py-8 fixed bottom-0 w-full">
     <div className="container mx-auto">
       <div className="flex flex-col items-center gap-y-6 justify-center">
-        <Link href={'#'}>
+        <Link href={'/'}>
           <Image src={'logo.svg'} width={180} height={180} alt="" />
         </Link>
         {/* <div className="flex gap-x-6 text-xl text-white ">
