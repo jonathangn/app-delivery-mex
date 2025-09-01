@@ -10,7 +10,7 @@ const nextConfig = {
     return config
   },
   images: {
-    domains: ['api.multiavatar.com'],
+    domains: ['api.multiavatar.com', 'static.vecteezy.com'],
     formats: ['image/webp'],
   },
   async headers() {

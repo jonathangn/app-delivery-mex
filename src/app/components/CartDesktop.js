@@ -25,7 +25,7 @@ const CartDesktop = () => {
 
 export default CartDesktop;
 
-{/* <div className={statusClass(0)}>
+/* <div className={statusClass(0)}>
 <Image src="/img/paid.png" width={30} height={30} alt="" />
 <span>Payment</span>
 <div className={styles.checkedIcon}>
@@ -76,4 +76,4 @@ export default CartDesktop;
         alt=""
     />
 </div>
-</div> */}
+</div> */

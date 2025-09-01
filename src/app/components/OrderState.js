@@ -62,11 +62,11 @@ const OrderState = () => {
   return (
     <>
       {banner ?
-        <div id="marketing-banner" tabIndex="-1" className="fixed z-50 flex flex-col md:flex-col w-[calc(100%-2rem)] py-4 -translate-x-1/2 bg-white border border-gray-100 rounded-lg shadow-sm max-w-[400px] left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600 justify-center ">
+        <div id="marketing-banner" tabIndex="-1" className="fixed z-50 flex flex-col md:flex-col w-[calc(100%-2rem)] py-4 -translate-x-1/2 bg-white border border-gray-100 rounded-lg shadow-sm max-w-[400px] left-1/2 top-6 justify-center ">
           <div className="flex items-center flex-shrink-0 justify-evenly ">
             <div className="flex flex-col items-start mb-3 mr-4 md:mb-0 ">
-              <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Estado último pedido</span>
-              <p className="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">{stateTx}</p>
+              <span className="self-center text-lg font-semibold whitespace-nowrap">Estado último pedido</span>
+              <p className="flex items-center text-sm font-normal text-gray-500">{stateTx}</p>
             </div>
             <IoCloseOutline className="text-4xl cursor-pointer text-orange" onClick={() => { setBanner(false) }} />
           </div>

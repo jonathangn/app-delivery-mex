@@ -1,16 +1,9 @@
 // css
 import './globals.css';
-import Nav from './components/Nav'
 
 // fonts
 import { Bangers, Quicksand, Roboto_Condensed } from 'next/font/google'
-import CartMobileIcon from './components/CartMobileIcon';
-import CartMobile from './components/CartMobile';
-import CartProvider, { CartContext } from './context/CartContext';
-import CartDesktop from './components/CartDesktop';
-import Footer from './components/Footer';
-import OrderState from './components/OrderState';
-import { useContext } from 'react';
+import CartProvider from './context/CartContext';
 import AuthProvider from './context/AuthProvider'
 
 
@@ -33,14 +26,12 @@ const robotoCondensed = Roboto_Condensed({
 
 export default function RootLayout({ children }) {
   return (
-    <CartProvider>
-      <html lang='en'>
+    <html lang='en'>
+      <body className={`${quicksand.variable} ${bangers.variable} ${robotoCondensed.variable} font-quicksand`}>
         <AuthProvider>
-          <body className={`${quicksand.variable} ${bangers.variable} ${robotoCondensed.variable} font-quicksand`}>
-            {children}
-          </body>
+          <CartProvider>{children}</CartProvider>
         </AuthProvider>
-      </html>
-    </CartProvider>
+      </body>
+    </html>
   );
 }

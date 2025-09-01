@@ -3,15 +3,11 @@
 
 // import { Cloudinary } from "@cloudinary/url-gen";
 import { createContext, useEffect, useState } from "react";
-import OrderState from "../components/OrderState";
-import { redirect, useRouter } from 'next/navigation'
-import connectDB from "../utils/mongo";
-
+import { useRouter } from 'next/navigation'
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-
     const router = useRouter();
     const MAIN_API = process.env.NEXT_PUBLIC_MAIN_API
     // const cld = new Cloudinary({ cloud: { cloudName: 'app-delivery-mex-img' } });
@@ -35,26 +31,24 @@ const CartProvider = ({ children }) => {
     let dailyOps = []
 
     useEffect(() => {
-        const amount = cart.reduce((a, c) => {
-            return a + c.amount
-        }, 0)
-        setItemAmount(amount)
-    })
-
-    useEffect(() => {
-        const price = cart.reduce((a, c) => {
-            return a + Number(c.price) * c.amount
-        }, 0)
-        setCartTotal(price)
-    })
+        const { totalAmount, totalPrice } = cart.reduce(
+            (acc, item) => ({
+                totalAmount: acc.totalAmount + item.amount,
+                totalPrice: acc.totalPrice + Number(item.price) * item.amount,
+            }),
+            { totalAmount: 0, totalPrice: 0 }
+        );
+        setItemAmount(totalAmount);
+        setCartTotal(totalPrice);
+    }, [cart]);
 
     useEffect(() => {
         if (Object.keys(lastOrder).length !== 0) {
-            fetch(`${MAIN_API}/api/orders/${lastOrder._id}`).then(res => {
-                setLastOrder(res.json())
+            fetch(`${MAIN_API}/api/orders/${lastOrder._id}`).then(async res => {
+                setLastOrder(await res.json())
             }).catch(err => console.log(err))
         }
-    }, [])
+    }, [lastOrder])
 
     const addToCart = (id, image, name, price, additionalTopping, size, crust) => {
         additionalTopping.sort((a, b) => a.name.localeCompare(b.name));
@@ -77,9 +71,7 @@ const CartProvider = ({ children }) => {
                 += 1;
             setCart(newCart)
         }
-
         setIsOpen(true)
-
     }
 
     const removeItem = (id, price, crust) => {
